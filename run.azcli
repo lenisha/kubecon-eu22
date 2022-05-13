@@ -11,11 +11,7 @@ az aks nodepool add \
     --aks-custom-headers UseGPUDedicatedVHD=true,usegen2vm=true 
 
 
-az aks nodepool update \
-    --resource-group kubecon \
-    --cluster-name modelserving \
-    --name gpunp \
-    --node-taints sku=gpu:NoSchedule 
+
   
 #Istio
 # https://istio.io/latest/docs/setup/getting-started/ls
