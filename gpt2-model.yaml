@@ -18,6 +18,9 @@ spec:
       - name: pretrained_model
         type: STRING
         value: distilgpt2
+      - name: optimum_model
+        type: BOOL
+        value: true   
     componentSpecs:
      - spec:
         containers:
