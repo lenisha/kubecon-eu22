@@ -7,7 +7,7 @@ export const options = {
   vus: 1,
   thresholds: {
     http_req_failed: ['rate<0.01'], // http errors should be less than 1%
-    http_req_duration: ['p(95)<500'], // 95 percent of response times must be below 500ms
+    http_req_duration: ['p(95)<1000'], // 95 percent of response times must be below 500ms
     'checks{type:read}': [{ threshold: 'rate>0.9', abortOnFail: true }],
   },
 };
@@ -24,7 +24,8 @@ export default function () {
 
   check (res, {
     'status is 200': (r) => r.status === 200,
-  }, { type: 'read' });
+    'has text': (r) => r.body.includes('huggingface'),
+  }, { type: 'model generated' });
 
   sleep(2);
 }
