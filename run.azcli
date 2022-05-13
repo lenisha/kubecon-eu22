@@ -27,6 +27,7 @@ helm upgrade --install seldon-core seldon-core-operator \
          --repo ./build    \
          --set usageMetrics.enabled=true \
          --set istio.enabled=true \
+         --set keda.enabled=true \
          --set istio.gateway="seldon-gateway.default.svc.cluster.local" \
          --namespace seldon-system
 
