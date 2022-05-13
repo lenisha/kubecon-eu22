@@ -40,7 +40,6 @@ spec:
             value: "gpu"
             effect: "NoSchedule"        
         securityContext:
-          allowPrivilegeEscalation: false
           runAsUser: 0
 
      
