@@ -1,5 +1,5 @@
 {
-    "name": "gpt2-model",
+    "name": "gpt2-cpu",
     "implementation": "mlserver_huggingface.HuggingFaceRuntime",
     "parallel_workers": 0,
     "parameters": {

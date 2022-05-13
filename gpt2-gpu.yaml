@@ -1,7 +1,7 @@
 apiVersion: machinelearning.seldon.io/v1alpha2
 kind: SeldonDeployment
 metadata:
-  name: gpt2-model
+  name: gpt2-gpu
   namespace: default
 spec:
   protocol: v2
@@ -21,6 +21,12 @@ spec:
       - name: optimum_model
         type: BOOL
         value: "true"   
+      - name: device
+        type: INT
+        value: "0"
+      - name: batch_size
+        type: INT
+        value: "128"  
     componentSpecs:
      - spec:
          containers:
