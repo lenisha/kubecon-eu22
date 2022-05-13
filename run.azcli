@@ -1,0 +1,42 @@
+az account set --subscription f869415f-5cff-46a3-b728-20659d14d62d
+az aks get-credentials --resource-group kubecon --name modelserving
+
+az aks nodepool add \
+    --resource-group kubecon \
+    --cluster-name modelserving \
+    --name gpunp \
+    --node-count 1 \
+    --node-vm-size Standard_NC6s_v3 \
+    --node-taints sku=gpu:NoSchedule \
+    --aks-custom-headers UseGPUDedicatedVHD=true,usegen2vm=true 
+
+
+az aks nodepool update \
+    --resource-group kubecon \
+    --cluster-name modelserving \
+    --name gpunp \
+    --node-taints sku=gpu:NoSchedule 
+  
+#Istio
+# https://istio.io/latest/docs/setup/getting-started/ls
+ export PATH="$PATH:/mnt/c/projects/kubecon/istio-1.13.3/bin"
+
+# Seldon
+# https://docs.seldon.io/projects/seldon-core/en/latest/install/azure.html
+
+cd helm-charts
+Make
+
+helm upgrade --install seldon-core seldon-core-operator \
+         --repo ./build    \
+         --set usageMetrics.enabled=true \
+         --set istio.enabled=true \
+         --set istio.gateway="seldon-gateway.default.svc.cluster.local" \
+         --namespace seldon-system
+
+# Seldon Analytics
+https://docs.seldon.io/projects/seldon-core/en/v1.13.1/analytics/analytics.html?highlight=analytics#helm-analytics-chart
+
+
+curl  http://20.36.242.175/seldon/default/gpt2-model/v2/models/infer -H "Content-Type: application/json" \
+-d '{"inputs":[{"name":"huggingface","shape":[1],"datatype":"BYTES","data":["this is a test"]}]}'
