@@ -1,9 +1,15 @@
 import http from 'k6/http';
-import { sleep } from 'k6';
+import { check, sleep } from 'k6';
+import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 
 export const options = {
   duration: '1m',
   vus: 1,
+  thresholds: {
+    http_req_failed: ['rate<0.01'], // http errors should be less than 1%
+    http_req_duration: ['p(95)<500'], // 95 percent of response times must be below 500ms
+    'checks{type:read}': [{ threshold: 'rate>0.9', abortOnFail: true }],
+  },
 };
 
 export default function () {
@@ -15,5 +21,20 @@ export default function () {
   const res = http.post(url, payload, {
           headers: { "Content-Type": "application/json" },
   });
-  sleep(1);
+
+  check (res, {
+    'status is 200': (r) => r.status === 200,
+  }, { type: 'read' });
+
+  sleep(2);
+}
+
+
+export function handleSummary(data) {
+  console.log('Finished executing performance tests');
+
+  return {
+    'stdout': textSummary(data, { indent: ' ', enableColors: true }), // Show the text summary to stdout...
+    'summary.json': JSON.stringify(data), // and a JSON with all the details...
+  };
 }
