@@ -34,12 +34,13 @@ spec:
               memory: 4Gi
               cpu: 4
               nvidia.com/gpu: 1  
+          securityContext:
+            runAsUser: 0    
         tolerations:
           - key: "sku"          # to be able to run  in GPU Nodepool
             operator: "Equal"
             value: "gpu"
             effect: "NoSchedule"        
-        securityContext:
-          runAsUser: 0
+        
 
      
