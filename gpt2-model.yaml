@@ -2,6 +2,7 @@ apiVersion: machinelearning.seldon.io/v1alpha2
 kind: SeldonDeployment
 metadata:
   name: gpt2-model
+  namespace: default
 spec:
   protocol: v2
   predictors:
@@ -17,24 +18,24 @@ spec:
       - name: pretrained_model
         type: STRING
         value: distilgpt2
-    # componentSpecs:
-    #  - spec:
-    #     containers:
-    #     - name: transformer
-    #       resources:
-    #         requests:
-    #           memory: 2Gi
-    #           cpu: 2
-    #           nvidia.com/gpu: 1    
-    #         limits:
-    #           memory: 4Gi
-    #           cpu: 4
-    #           nvidia.com/gpu: 1  
-    #     tolerations:
-    #       - key: "nvidia.com"          # to be able to run  in GPU Nodepool
-    #         operator: "Equal"
-    #         value: "gpu"
-    #         effect: "NoSchedule"        
+    componentSpecs:
+     - spec:
+        containers:
+        - name: transformer
+          resources:
+            requests:
+              memory: 2Gi
+              cpu: 2
+              nvidia.com/gpu: 1    
+            limits:
+              memory: 4Gi
+              cpu: 4
+              nvidia.com/gpu: 1  
+        tolerations:
+          - key: "nvidia.com"          # to be able to run  in GPU Nodepool
+            operator: "Equal"
+            value: "gpu"
+            effect: "NoSchedule"        
 
 
      
