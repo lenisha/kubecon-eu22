@@ -21,6 +21,12 @@ spec:
       - name: optimum_model
         type: BOOL
         value: "true"   
+      - name: device
+        type: INT
+        value: "0"
+      - name: batch_size
+        type: INT
+        value: "128"  
     componentSpecs:
      - spec:
          containers:
