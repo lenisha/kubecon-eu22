@@ -32,7 +32,7 @@ spec:
               cpu: 4
               nvidia.com/gpu: 1  
         tolerations:
-          - key: "nvidia.com"          # to be able to run  in GPU Nodepool
+          - key: "sku"          # to be able to run  in GPU Nodepool
             operator: "Equal"
             value: "gpu"
             effect: "NoSchedule"        
