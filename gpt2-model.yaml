@@ -20,7 +20,7 @@ spec:
         value: distilgpt2
       - name: optimum_model
         type: BOOL
-        value: true   
+        value: "true"   
     componentSpecs:
      - spec:
         containers:
