@@ -36,3 +36,24 @@ https://docs.seldon.io/projects/seldon-core/en/v1.13.1/analytics/analytics.html?
 
 curl  http://20.36.242.175/seldon/default/gpt2-model/v2/models/infer -H "Content-Type: application/json" \
 -d '{"inputs":[{"name":"huggingface","shape":[1],"datatype":"BYTES","data":["this is a test"]}]}'
+
+
+
+```
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: seldon
+  name: seldon-manager-rolebinding-flux-applier
+ 
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: seldon-manager-role-seldon-system
+subjects:
+- kind: ServiceAccount
+  name: flux-applier   
+  namespace: default
+```

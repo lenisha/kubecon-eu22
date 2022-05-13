@@ -1,0 +1,30 @@
+# This is a basic workflow to help you get started with Actions
+
+name: LoadTest
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  k6_load_test:
+    name: k6 Load Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Run local k6 test
+      uses: grafana/k6-action@v0.2.0
+      with:
+        filename: testmodel.js
+        flags: --vus 2 --duration 30s --quiet
+
+    - name: Store performance test results
+      uses: actions/upload-artifact@v3
+      with:
+          name: k6-summary-report
+          path: summary.txt
