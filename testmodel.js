@@ -7,7 +7,7 @@ export const options = {
   vus: 1,
   thresholds: {
     http_req_failed: ['rate<0.01'], // http errors should be less than 1%
-    http_req_duration: ['p(95)<1500'], // 95 percent of response times must be below 500ms
+    http_req_duration: ['p(95)<3000'], // 95 percent of response times must be below 500ms
     'checks{type:read}': [{ threshold: 'rate>0.9', abortOnFail: true }],
   },
 };
