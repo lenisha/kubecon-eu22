@@ -21,6 +21,7 @@ jobs:
       uses: grafana/k6-action@v0.2.0
       with:
         filename: testmodel.js
+        flags: --vus 1 --duration 10s --quiet
 
     - name: Store performance test results
       uses: actions/upload-artifact@v3
