@@ -39,6 +39,8 @@ spec:
             operator: "Equal"
             value: "gpu"
             effect: "NoSchedule"        
-
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsUser: 0
 
      
