@@ -27,7 +27,7 @@ export default function () {
     'has text': (r) => r.body.includes('huggingface'),
   }, { type: 'model generated' });
 
-  sleep(2);
+  sleep(0.5);
 }
 
 
