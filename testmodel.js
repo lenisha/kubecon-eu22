@@ -47,7 +47,8 @@ export function gpu_test() {
   });
 
   check (res, {
-    'status is 200': (r) => r.status == 200  
+    'status is 200': (r) => r.status == 200,
+    'has text': (r) => r.body.includes('generated'),
   }, { type: 'read' });
 
 }
@@ -57,11 +58,12 @@ export function cpu_test() {
   
   const res = http.post(__ENV.INFER_URL, payload, {
           headers: { "Content-Type": "application/json" },
-          timeout: "500s",
+          timeout: "300s",
   });
 
   check (res, {
-    'status is 200': (r) => r.status == 200
+    'status is 200': (r) => r.status == 200,
+    'has text': (r) => r.body.includes('generated'),
   }, { type: 'read' });
 
  
