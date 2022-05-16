@@ -3,7 +3,12 @@ kind: SeldonDeployment
 metadata:
   name: gpt2-cpu
   namespace: default
+ 
 spec:
+  annotations:
+    prometheus.io/scrape: "true" 
+    prometheus.io/path: /prometheus 
+    prometheus.io/port: "8000"
   protocol: v2
   predictors:
   - name: default
