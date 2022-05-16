@@ -22,7 +22,7 @@ export const options = {
   },
   thresholds: {
     'iteration_duration{scenario:cpu_test}': [`max>=0`],
-    'iteration_duration{group:::gpu_test}': [`max>=0`],
+    'iteration_duration{scenario:gpu_test}': [`max>=0`],
     'http_req_duration{scenario:cpu_test}': [`max>=0`],
     'http_req_duration{scenario:gpu_test}': [`max>=0`],
   },
