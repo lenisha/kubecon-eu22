@@ -14,13 +14,17 @@
 
 
 	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [],
+	"extensions": [
+		"ms-toolsai.jupyter",
+		"ms-python.vscode-pylance",
+		"ms-python.python"
+	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip install --user mlserver==1.1.0.dev4 mlserver-huggingface==1.1.0.dev4",
+	"postCreateCommand": "chmod +x ./.devcontainer/library-scripts/post-install.sh && ./.devcontainer/library-scripts/post-install.sh",
 
 	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode",

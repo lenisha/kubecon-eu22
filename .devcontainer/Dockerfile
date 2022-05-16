@@ -8,3 +8,16 @@ FROM mcr.microsoft.com/vscode/devcontainers/base:0-${VARIANT}
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 #     && apt-get -y install --no-install-recommends <your-package-list-here>
 
+# install k6
+RUN gpg -k  \
+    && gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69 \
+    && echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list \
+    && apt-get update \
+    && apt-get install k6
+
+RUN wget https://github.com/derailed/k9s/releases/download/v0.25.18/k9s_Linux_x86_64.tar.gz \
+    && tar -xvzf k9s_Linux_x86_64.tar.gz \
+    && mv k9s /usr/local/bin/ \
+    && chmod +x /usr/local/bin/k9s \
+    && rm -f k9s_Linux_x86_64.tar.gz
+
