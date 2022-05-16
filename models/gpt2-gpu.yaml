@@ -5,6 +5,10 @@ metadata:
   namespace: default
 spec:
   protocol: v2
+  annotations:
+    prometheus.io/scrape: "true" 
+    prometheus.io/path: "/prometheus" 
+    prometheus.io/port: "8000"
   predictors:
   - name: default
     replicas: 1
