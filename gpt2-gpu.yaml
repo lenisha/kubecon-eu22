@@ -28,13 +28,15 @@ spec:
      - spec:
          containers:
          - name: transformer
+           env:
+            - name: MLSERVER_PARALLEL_WORKERS
+              value: "1"
            resources:
              requests:
-               memory: 2Gi
+               memory: 6Gi
                cpu: 2
                nvidia.com/gpu: 1    
              limits:
-               memory: 4Gi
                cpu: 4
                nvidia.com/gpu: 1  
            securityContext:
