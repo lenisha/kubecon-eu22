@@ -47,8 +47,7 @@ export function gpu_test() {
   });
 
   check (res, {
-    'status is 200': (r) => r.status == 200,
-    'has text': (r) => r.body.includes('generated'),
+    'status is 200': (r) => r.status == 200  
   }, { type: 'read' });
 
 }
@@ -62,8 +61,7 @@ export function cpu_test() {
   });
 
   check (res, {
-    'status is 200': (r) => r.status == 200,
-    'has text': (r) => r.body.includes('generated'),
+    'status is 200': (r) => r.status == 200
   }, { type: 'read' });
 
  
