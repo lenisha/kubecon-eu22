@@ -35,6 +35,21 @@ helm upgrade --install seldon-core seldon-core-operator \
 https://docs.seldon.io/projects/seldon-core/en/v1.13.1/analytics/analytics.html?highlight=analytics#helm-analytics-chart
 
 
+# DCGM EXporter
+helm repo add gpu-helm-charts   https://nvidia.github.io/dcgm-exporter/helm-charts
+helm repo update
+k create ns exporter-dcgm
+helm install dcgm  gpu-helm-charts/dcgm-exporter --values setup/dcgm-values.yaml -n exporter-dcgm
+
+# GPU Metrics Gate
+kubectl debug node/aks-gpunp-23444864-vmss000001 -it --image=mcr.microsoft.com/dotnet/runtime-deps:6.0
+chroot /host
+vi /etc/default/kubelet 
+#set DisableAcceleratorUsageMetrics=false
+systemctl restart kubelet
+
+
+
 curl  -X POST http://20.36.242.175/seldon/default/gpt2-gpu/v2/models/infer -H "Content-Type: application/json" \
 -d '{"inputs":[{"name":"args","shape":[1],"datatype":"BYTES","data":["this is a test"]}]}'
 
