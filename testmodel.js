@@ -57,7 +57,7 @@ export function cpu_test() {
   
   const res = http.post(__ENV.INFER_URL, payload, {
           headers: { "Content-Type": "application/json" },
-          timeout: "300s",
+          timeout: "500s",
   });
 
   check (res, {
