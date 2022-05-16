@@ -17,10 +17,7 @@ spec:
         value: text-generation
       - name: pretrained_model
         type: STRING
-        value: distilgpt2
-      - name: optimum_model
-        type: BOOL
-        value: "true"   
+        value: distilgpt2 
       - name: device
         type: INT
         value: "0"
