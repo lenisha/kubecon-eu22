@@ -50,7 +50,7 @@ data:
         # Any errors related to prometheus scraping can be found in the KubeMonAgentEvents table in the Log Analytics workspace that the cluster is sending data to.
 
         #Interval specifying how often to scrape for metrics. This is duration of time and can be specified for supporting settings by combining an integer value and time unit as a string value. Valid time units are ns, us (or µs), ms, s, m, h.
-        interval = "1m"
+        interval = "1s"
 
         ## Uncomment the following settings with valid string arrays for prometheus scraping
         #fieldpass = ["metric_to_pass1", "metric_to_pass12"]

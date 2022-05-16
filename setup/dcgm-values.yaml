@@ -1,0 +1,14 @@
+serviceMonitor:
+  enabled: false
+tolerations:
+  - key: "sku"
+    operator: "Equal"
+    value: "gpu"
+    effect: "NoSchedule"
+nodeSelector:
+  accelerator: nvidia
+podAnnotations: 
+    prometheus.io/scrape: "true" 
+    prometheus.io/path: "/metrics" 
+    prometheus.io/port: "9400"         
+arguments: ["-c", "'1000'", "-f", "/etc/dcgm-exporter/dcp-metrics-included.csv"]

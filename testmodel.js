@@ -1,41 +1,70 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
-import { textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
 
 export const options = {
-  duration: '1m',
-  vus: 1,
+  scenarios: {
+    gpu_test: {
+      executor: 'per-vu-iterations',
+      exec: 'gpu_test',
+      vus: 1,
+      iterations: 1,
+      tags: { my_custom_tag: 'gpu_test' },
+      env: { INFER_URL: 'http://20.36.242.175/seldon/default/gpt2-gpu/v2/models/infer' },
+    },
+    cpu_test: {
+      executor: 'per-vu-iterations',
+      exec: 'cpu_test',
+      vus: 1,
+      iterations: 1,
+      tags: { my_custom_tag: 'cpu_test' },
+      env: { INFER_URL: 'http://20.36.242.175/seldon/default/gpt2-cpu/v2/models/infer' },
+    }
+  },
   thresholds: {
-    http_req_failed: ['rate<0.01'], // http errors should be less than 1%
-    http_req_duration: ['p(95)<3000'], // 95 percent of response times must be below 500ms
-    'checks{type:read}': [{ threshold: 'rate>0.9', abortOnFail: true }],
+    'iteration_duration{scenario:cpu_test}': [`max>=0`],
+    'iteration_duration{group:::gpu_test}': [`max>=0`],
+    'http_req_duration{scenario:cpu_test}': [`max>=0`],
+    'http_req_duration{scenario:gpu_test}': [`max>=0`],
   },
 };
 
-export default function () {
-  const url = 'http://20.36.242.175/seldon/default/gpt2-cpu/v2/models/infer';
+// Data CREATE
+const bigdata = "\"this is a test\",".repeat(512);
+
+const payload = '{ \
+"inputs":[\
+    {"name":"text_inputs","shape":[1], "datatype":"BYTES", \
+    "data":[' + bigdata.substring(0,bigdata.length-1) + '] \
+    } \
+  ]}';
+
+
+export function gpu_test() {
   
-  
-  const payload = '{"inputs":[{"name":"huggingface","shape":[1],"datatype":"BYTES","data":["this is a test"]}]}';
-  
-  const res = http.post(url, payload, {
+  const res = http.post(__ENV.INFER_URL, payload, {
           headers: { "Content-Type": "application/json" },
+          timeout: "300s",
   });
 
   check (res, {
-    'status is 200': (r) => r.status === 200,
-    'has text': (r) => r.body.includes('huggingface'),
-  }, { type: 'model generated' });
+    'status is 200': (r) => r.status == 200,
+    'has text': (r) => r.body.includes('generated'),
+  }, { type: 'read' });
 
-  sleep(0.5);
 }
 
 
-export function handleSummary(data) {
-  console.log('Finished executing performance tests');
+export function cpu_test() {
+  
+  const res = http.post(__ENV.INFER_URL, payload, {
+          headers: { "Content-Type": "application/json" },
+          timeout: "300s",
+  });
 
-  return {
-    'stdout': textSummary(data, { indent: ' ', enableColors: true }), // Show the text summary to stdout...
-    'summary.txt': textSummary(data, { indent: ' ', enableColors: true }), // and a JSON with all the details...
-  };
+  check (res, {
+    'status is 200': (r) => r.status == 200,
+    'has text': (r) => r.body.includes('generated'),
+  }, { type: 'read' });
+
+ 
 }
