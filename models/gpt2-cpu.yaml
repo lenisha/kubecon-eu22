@@ -3,7 +3,6 @@ kind: SeldonDeployment
 metadata:
   name: gpt2-cpu
   namespace: default
- 
 spec:
   annotations:
     prometheus.io/scrape: "true" 
