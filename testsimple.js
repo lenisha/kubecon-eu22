@@ -29,12 +29,11 @@ export const options = {
 };
 
 // Data CREATE
-const bigdata = "\"this is a test\",".repeat(512);
 
 const payload = '{ \
-"inputs":[\
+"inputs":[ \
     {"name":"text_inputs","shape":[1], "datatype":"BYTES", \
-    "data":[' + bigdata.substring(0,bigdata.length-1) + '] \
+    "data":["this is a test"] \
     } \
   ]}';
 

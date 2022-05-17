@@ -1,0 +1,12 @@
+{
+    "name": "transformer",
+    "implementation": "mlserver_huggingface.HuggingFaceRuntime",
+    "parallel_workers": 0,
+    "parameters": {
+        "extra": {
+            "task": "text-classification"
+          
+           
+        }
+    }
+}
