@@ -33,8 +33,12 @@ spec:
          containers:
          - name: transformer
            env:
-            - name: MLSERVER_PARALLEL_WORKERS
-              value: "1"
+          - name: MLSERVER_PARALLEL_WORKERS
+            value: "0"
+          - name: MLSERVER_MAX_BATCH_SIZE
+            value: "128"
+          - name: MLSERVER_MAX_BATCH_TIME
+            value: "1"
            resources:
              requests:
                memory: 6Gi
