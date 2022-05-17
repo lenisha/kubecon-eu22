@@ -1,7 +1,7 @@
 apiVersion: machinelearning.seldon.io/v1alpha2
 kind: SeldonDeployment
 metadata:
-  name: gpt2-gpu
+  name: gpt2-gpu-batch
   namespace: default
 spec:
   protocol: v2
@@ -34,8 +34,11 @@ spec:
          - name: transformer
            env:
            - name: MLSERVER_PARALLEL_WORKERS
-             value: "1"
-        
+             value: "0"
+           - name: MLSERVER_MODEL_MAX_BATCH_SIZE
+             value: "128"
+           - name: MLSERVER_MODEL_MAX_BATCH_TIME
+             value: "3"
            resources:
              requests:
                memory: 6Gi
