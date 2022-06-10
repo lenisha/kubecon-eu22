@@ -7,7 +7,7 @@ export const options = {
       executor: 'per-vu-iterations',
       exec: 'gpu_test',
       vus: 1,
-      iterations: 200,
+      iterations: 50,
       tags: { my_custom_tag: 'gpu_test' },
       env: { INFER_URL: 'http://20.36.242.175/seldon/default/gpt2-gpu/v2/models/infer' },
     },
@@ -15,7 +15,7 @@ export const options = {
       executor: 'per-vu-iterations',
       exec: 'cpu_test',
       vus: 1,
-      iterations: 20,
+      iterations: 7,
       tags: { my_custom_tag: 'cpu_test' },
       env: { INFER_URL: 'http://20.36.242.175/seldon/default/gpt2-cpu/v2/models/infer' },
     }
